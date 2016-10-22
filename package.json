@@ -1,0 +1,32 @@
+{
+    "name": "serverless-url-shortener",
+    "version": "0.0.1",
+    "author": "Luca Bianchi <bianchi.luca@gmail.com> (http://github.com/aletheia)",
+    "description": "A simple url-shortener, using Serverless framework",
+    "license": "Apache-2.0",
+    "scripts": {
+        "ci": "ENV=ci istanbul cover --root code/ node_modules/jasmine/bin/jasmine.js",
+        "cover": "ENV=test istanbul cover --root code/ node_modules/jasmine/bin/jasmine.js",
+        "lint": "ENV=test eslint .",
+        "test": "ENV=test jasmine",
+        "sls": "sls"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aletheia/serverless-url-shortener.git"
+    },
+    "private":false,
+    "author": {
+        "name": "Luca Bianchi",
+        "email": "bianchi.luca@gmail.com",
+        "url": "https://it.linkedin.com/in/lucabianchipavia"
+    },
+    "keywords": [
+        "url-shortener",
+        "serverless"
+    ],
+    "bugs": {
+        "url": "https://github.com/aletheia/serverless-url-shortener/issues"
+    },
+    "homepage": "https://github.com/aletheia/serverless-url-shortener#readme"
+}
