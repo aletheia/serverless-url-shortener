@@ -1,25 +1,11 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
-service: aws-nodejs # NOTE: update this with your service name
+service: serverless-url-shortener
 
 provider:
   name: aws
   runtime: nodejs4.3
 
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+  stage: dev
+  region: eu-west-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -43,7 +29,7 @@ provider:
 #  artifact: my-service-code.zip
 
 functions:
-  hello:
+  l:
     handler: handler.hello
 
 #    The following are a few example events you can configure
