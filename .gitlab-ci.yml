@@ -1,0 +1,23 @@
+image: node:4.3
+services:
+
+variables:
+
+before_script:
+  - npm install -q
+stages:
+  - test
+
+unit:
+  stage: test
+  script:
+    - npm run ci
+  variables:
+    JASMINE_CONFIG_PATH: spec/support/unit.json
+
+integration:
+  stage: test
+  script:
+    - npm run ci
+  variables:
+    JASMINE_CONFIG_PATH: spec/support/integration.json
