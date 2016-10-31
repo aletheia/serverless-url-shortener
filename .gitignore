@@ -68,3 +68,4 @@ jspm_packages
 
 # JIRA plugin
 atlassian-ide-plugin.xml
+.idea
