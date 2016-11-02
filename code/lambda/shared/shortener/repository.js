@@ -7,8 +7,8 @@ var CONST = {
 
 
 var ShortenerRepository = function(logger, client, config) {
-    var tableName = config.SHORTENER_TABLE_NAME;
-    var indexName = config.SHORTENER_TABLE_NAME;
+    var tableName = config.resourceTableName;
+    var indexName = config.resourceIndexName;
 
     function getDefaultParams() {
         return {

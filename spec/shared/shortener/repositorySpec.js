@@ -8,8 +8,8 @@ require("jasmine-expect");
 describe("shared/shortener/ShortenerRepository", function() {
     var sut, client;
     var config = {
-        SHORTENER_TABLE_NAME: "shortener-table",
-        SHORTENER_INDEX_NAME: "owner-id-index"
+        resourceTableName: "shortener-table",
+        resourceIndexName: "owner-id-index"
     };
 
     beforeEach(function() {
@@ -33,7 +33,7 @@ describe("shared/shortener/ShortenerRepository", function() {
     describe("create()", function() {
         it("should return a promise", function(done) {
             var params = {
-                TableName: config.SHORTENER_TABLE_NAME,
+                TableName: config.resourceTableName,
                 Item: {
                     uuid: "id"
                 },
@@ -60,7 +60,7 @@ describe("shared/shortener/ShortenerRepository", function() {
 
     describe("delete()", function() {
         it("should return a promise", function(done) {
-            var params = {TableName: config.SHORTENER_TABLE_NAME, Key: {uuid: "id"}};
+            var params = {TableName: config.resourceTableName, Key: {uuid: "id"}};
             spyOn(client, "delete").and.returnValue(Promise.resolve({}));
             sut.delete("id")
                 .then(function(result) {
@@ -73,7 +73,7 @@ describe("shared/shortener/ShortenerRepository", function() {
 
     describe("get()", function() {
         it("should return a promise", function(done) {
-            var params = {TableName: config.SHORTENER_TABLE_NAME, Key: {uuid: "id"}};
+            var params = {TableName: config.resourceTableName, Key: {uuid: "id"}};
             var item = {
                 Item: {
 
@@ -87,7 +87,7 @@ describe("shared/shortener/ShortenerRepository", function() {
                 .then(done);
         });
         it("should return a promise", function(done) {
-            var params = {TableName: config.SHORTENER_TABLE_NAME, Key: {uuid: "id"}};
+            var params = {TableName: config.resourceTableName, Key: {uuid: "id"}};
             var item = {
                 Item: {}
             };
@@ -105,7 +105,7 @@ describe("shared/shortener/ShortenerRepository", function() {
 
         it("should return a promise", function(done) {
             var params = {
-                TableName: config.SHORTENER_TABLE_NAME,
+                TableName: config.resourceTableName,
             };
             spyOn(client, "scan").and.returnValue(Promise.resolve());
             sut.list()
@@ -121,7 +121,7 @@ describe("shared/shortener/ShortenerRepository", function() {
     describe("touch()", function() {
         it("should return a promise", function(done) {
             var params = {
-                TableName: config.SHORTENER_TABLE_NAME,
+                TableName: config.resourceTableName,
                 Key: {uuid: "id"},
                 UpdateExpression: "set lastModified = :lm",
                 ExpressionAttributeValues: {
