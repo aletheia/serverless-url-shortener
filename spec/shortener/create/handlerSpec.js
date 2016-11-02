@@ -2,51 +2,56 @@
 
 var _ = require("lodash"),
     helper = require("../../helper.js"),
-    Index = require("../../../code/lambda/shortener/create/handler");
+    Index = require("../../../code/lambda/shortener/create/handler"),
+    uuid = require("node-uuid"),
+    config = require("../../../code/lambda/shared/config"),
+    AWS = require("aws-sdk");
 
 require("jasmine-expect");
 
 
-xdescribe("shortener/Create", function() {
+describe("shortener/Create", function() {
+    var dynamoClient = new AWS.DynamoDB.DocumentClient({region: config.dynamodb.region});
     var sut;
+    var newItem;
 
     beforeEach(function(done) {
         sut = Index;
+        newItem = {
+            uuid: uuid.v1(),
+            url: "http://www.neosperience.com"
+        };
         done();
     });
 
     describe("handler()", function() {
-        it("should get a list of resources", function(done) {
-            var event = {};
+        it("should create a new resource", function(done) {
+            var event = {
+                body: newItem
+            };
 
             sut.handler(event, helper.getContextMock(), function(err, result) {
                 expect(err).toBeNull();
                 var r = JSON.parse(result);
-                /*expect(r.count).toBe(4);
-                expect(r.lastKey).toBeNull();
-                expect(r.result).toBeArrayOfSize(4);
-                expect(r.result).toBeArrayOfObjects();
-                _.each(r.result, function (o) {
-                    expect(o).toHaveMember("uuid");
-                    expect(o).toHaveMember("name");
-                    expect(o).toHaveMember("status");
-                    expect(o.created).toBeIso8601();
-                    expect(o.lastModified).toBeIso8601();
-                    // eslint-disable-next-line no-underscore-dangle
-                    expect(o._links).toEqual({ self: { title: "XOBJECT", href: "xobject/" + o.uuid } });
-                    // eslint-disable-next-line no-underscore-dangle
-                    expect(o._resolved).toBe(true);
-                    expect(o).toHaveMember("tags");
-                    expect(o).toHaveMember("schemaNames");
-                });*/
+                expect(r).toHaveMember("uuid");
+                expect(r.created).toBeIso8601();
+                expect(r.lastModified).toBeIso8601();
                 done();
-
             });
         });
+    });
 
-        it("should create a link (import)", function(done) {
+    afterEach(function(done) {
+        var params = {
+            TableName: config.shortener.resourceTableName,
+            Key: {
+                uuid: newItem.uuid
+            }
+        };
 
-        });
-
+        dynamoClient.delete(params).promise()
+            .then(function(res) {
+                done();
+            });
     });
 });
