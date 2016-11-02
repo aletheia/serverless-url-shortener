@@ -85,7 +85,7 @@ describe("shared/shortener/translator", function() {
             sut = new Translator(helper.getLoggerMock(), event, logic);
             sut.list()
                 .then(function(result) {
-                    expect(logic.list).toHaveBeenCalledWith({});
+                    expect(logic.list).toHaveBeenCalled();
                     expect(result.result[0]).toEqual({
                         uuid: "id1",
                         created: "1970-01-01T00:00:00.123Z",

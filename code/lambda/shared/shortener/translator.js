@@ -37,7 +37,7 @@ var ShortenerTranslator = function(logger, event, logic) {
     this.list = function() {
         logger.verbose(CONST.MODULE_NAME + "List");
         var data = {};
-        return logic.list(data)
+        return logic.list()
             .then(function(result) {
                 result.result = _.map(result.result, function(item) {
                     return toDomainObject(item);
