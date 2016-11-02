@@ -16,7 +16,7 @@ describe("shared/shortener/ShortenerAdapter", function() {
             },
             get: function() {
             },
-            listByOwner: function() {
+            list: function() {
             },
             touch: function() {
             },
@@ -71,8 +71,7 @@ describe("shared/shortener/ShortenerAdapter", function() {
 
         it("should return a created object (import)", function(done) {
             spyOn(repository, "create").and.returnValue(Promise.resolve("dummyObject"));
-            var item = {
-            };
+            var item = {};
             sut.create(item)
                 .then(function(result) {
                     expect(repository.create).toHaveBeenCalledWith(jasmine.any(String), {
@@ -109,5 +108,35 @@ describe("shared/shortener/ShortenerAdapter", function() {
                 });
         });
     });
+
+    describe("list()", function() {
+        it("return a list of items", function(done) {
+            var expRes = {
+                Count: 1,
+                Items: [
+                    {
+                        uuid: "id1"
+                    }
+                ]
+            };
+
+            spyOn(repository, "list").and.returnValue(Promise.resolve(expRes));
+            sut.list()
+                .then(function(result) {
+                    expect(repository.list).toHaveBeenCalledWith();
+                    expect(result).toEqual(
+                        {
+                            count: 1,
+                            result: [
+                                {
+                                    uuid: "id1"
+                                }
+                            ]
+                        });
+                    done();
+                });
+        });
+    });
+
 
 });
