@@ -26,8 +26,9 @@ describe("shared/shortener/translator", function() {
 
     describe("create()", function() {
         it("should call the logic and return an object", function(done) {
+            var expectedBody = "{\"uuid\":\"dummy\"}";
             var event = {
-                body: "dummyItem"
+                body: "{\"uuid\":\"dummy\"}"
             };
             spyOn(logic, "create").and.returnValue(Promise.resolve({
                 created: 123,
@@ -36,7 +37,7 @@ describe("shared/shortener/translator", function() {
             sut = new Translator(helper.getLoggerMock(), event, logic);
             sut.create()
                 .then(function(result) {
-                    expect(logic.create).toHaveBeenCalledWith("dummyItem");
+                    expect(logic.create).toHaveBeenCalledWith(JSON.parse(expectedBody));
                     expect(result.created).toBeIso8601();
                     expect(result.lastModified).toBeIso8601();
                     done();

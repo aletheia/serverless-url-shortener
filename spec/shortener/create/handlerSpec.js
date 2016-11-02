@@ -27,7 +27,7 @@ describe("shortener/Create", function() {
     describe("handler()", function() {
         it("should create a new resource", function(done) {
             var event = {
-                body: newItem
+                body: JSON.stringify(newItem)
             };
 
             sut.handler(event, helper.getContextMock(), function(err, result) {

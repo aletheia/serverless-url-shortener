@@ -24,6 +24,7 @@ var ShortenerTranslator = function(logger, event, logic) {
 
     this.create = function() {
         logger.verbose(CONST.MODULE_NAME + "Create");
+        event.body = JSON.parse(event.body);
         return logic.create(event.body)
             .then(function(result) {
                 return toDomainObject(result);
