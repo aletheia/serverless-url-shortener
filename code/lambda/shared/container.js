@@ -2,7 +2,7 @@
 
 var _ = require("lodash"),
     AWS = require("aws-sdk"),
-    config = require("./config.js"),
+    config = require("./config"),
     intravenous = require("intravenous"),
     loggerFactory = require("./util/logger.js"),
     Promise = require("bluebird");
@@ -12,16 +12,18 @@ function registerLogger(container, config) {
     container.register("logger", logger, "singleton");
 }
 
-function registerXObject(container, config) {
+function registerResource(container, config) {
     var c = _.isObject(config.shortener) ? config.shortener : {};
-    _.assign(c, {
-        xObjectTableName: config.SHORTENER_TABLE_NAME
-    });
+
+/*    _.assign(c, {
+        resourceTableName: config.SHORTENER_TABLE_NAME,
+        resourceIndexName: config.SHORTENER_INDEX_NAME
+    });*/
+
     container.register("shortener.adapter", require("./shortener/adapter.js"));
     container.register("shortener.config", c, "singleton");
     container.register("shortener.logic", require("./shortener/logic.js"));
     container.register("shortener.repository", require("./shortener/repository.js"));
-    container.register("shortener.security", require("./shortener/security.js"));
     container.register("shortener.translator", require("./shortener/translator.js"));
     container.register("shortener.validator", require("./shortener/validator.js"));
 }
@@ -44,7 +46,7 @@ function createContainer(event, context) {
     container.register("event", event);
     container.register("context", context);
     registerLogger(container, config);
-    registerXObject(container, config);
+    registerResource(container, config);
     registerDynamoDB(container, config);
     return container;
 }
