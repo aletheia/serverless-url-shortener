@@ -48,4 +48,5 @@ var ShortenerValidator = function(logger, event, translator) {
 
 };
 
+ShortenerValidator.$inject = ["logger", "event", "shortener.translator"];
 module.exports = ShortenerValidator;
