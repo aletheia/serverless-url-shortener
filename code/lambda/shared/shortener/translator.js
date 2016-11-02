@@ -47,6 +47,12 @@ var ShortenerTranslator = function(logger, event, logic) {
             });
     };
 
+    this.resolve = function() {
+        logger.verbose(CONST.MODULE_NAME + "Resolve");
+        return logic.resolve(event.pathParameters.tracker);
+    };
+
+
 };
 
 ShortenerTranslator.$inject = ["logger", "event", "shortener.logic"];

@@ -27,7 +27,7 @@ var ShortenerValidator = function(logger, event, translator) {
         return Promise.try(
             function() {
                 if (_.isNil(event.pathParameters)) {
-                    throw new ApplicationError(ApplicationError.codes.UNPROCESSABLE, "Missing uuid in path");
+                    throw new ApplicationError(ApplicationError.codes.UNPROCESSABLE, "Missing path parameters");
                 } else if (_.isNil(event.pathParameters.uuid)) {
                     throw new ApplicationError(ApplicationError.codes.UNPROCESSABLE, "Missing uuid in path");
                 }
@@ -45,7 +45,19 @@ var ShortenerValidator = function(logger, event, translator) {
         );
     };
 
-
+    this.resolve = function() {
+        logger.verbose(CONST.MODULE_NAME + "Resolve");
+        return Promise.try(
+            function() {
+                if (_.isNil(event.pathParameters)) {
+                    throw new ApplicationError(ApplicationError.codes.UNPROCESSABLE, "Missing path parameters");
+                } else if (_.isNil(event.pathParameters.tracker)) {
+                    throw new ApplicationError(ApplicationError.codes.UNPROCESSABLE, "Missing tracker in path");
+                }
+                return translator.resolve();
+            }
+        );
+    };
 };
 
 ShortenerValidator.$inject = ["logger", "event", "shortener.translator"];

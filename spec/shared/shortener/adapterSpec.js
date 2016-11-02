@@ -40,7 +40,6 @@ describe("shared/shortener/ShortenerAdapter", function() {
                         uuid: "id",
                         created: jasmine.any(Number),
                         tracker: jasmine.any(String),
-                        visited: 0,
                         lastModified: jasmine.any(Number)
                     });
                     expect(result).toBe("dummyObject");
@@ -61,7 +60,6 @@ describe("shared/shortener/ShortenerAdapter", function() {
                         uuid: "id",
                         created: jasmine.any(Number),
                         tracker: jasmine.any(String),
-                        visited: 0,
                         lastModified: jasmine.any(Number)
                     });
                     expect(result).toBe("dummyObject");
@@ -77,7 +75,6 @@ describe("shared/shortener/ShortenerAdapter", function() {
                     expect(repository.create).toHaveBeenCalledWith(jasmine.any(String), {
                         uuid: jasmine.any(String),
                         created: jasmine.any(Number),
-                        visited: 0,
                         lastModified: jasmine.any(Number)
                     });
                     expect(result).toBe("dummyObject");

@@ -64,6 +64,19 @@ var ShortenerRepository = function(logger, client, config) {
         return client.scan(params);
     };
 
+    this.resolve = function(trackerId) {
+        logger.verbose(CONST.MODULE_NAME + "Resolve");
+        var params = getDefaultParams();
+        _.assign(params, {
+            IndexName: indexName,
+            KeyConditionExpression: "#tracker = :tracker",
+            ExpressionAttributeNames: {"#tracker": "tracker"},
+            ExpressionAttributeValues: {":tracker": trackerId}
+        });
+        return client.query(params);
+    };
+
+
     this.touch = function(key, timestamp) {
         logger.verbose(CONST.MODULE_NAME + "Touch");
         var params = getDefaultParams();
@@ -78,6 +91,20 @@ var ShortenerRepository = function(logger, client, config) {
             ReturnValues: "UPDATED_NEW"
         });
         return client.update(params);
+    };
+
+    this.update = function(key, value) {
+        logger.verbose(CONST.MODULE_NAME + "Update");
+        var params = getDefaultParams();
+        params.Key = {uuid: key};
+        params.Item = value;
+        params.ConditionExpression = "attribute_exists(#uuid)";
+        params.ExpressionAttributeNames = {"#uuid": "uuid"};
+        var self = this;
+        return client.update(params)
+            .then(function() {
+                return self.get(key);
+            });
     };
 
 

@@ -17,8 +17,7 @@ var ShortenerAdapter = function(logger, repository) {
     this.create = function(resource) {
         logger.verbose(CONST.MODULE_NAME + "Create");
         fixUuid(resource);
-        var now = (new Date()).getMilliseconds();
-        resource.visited = 0;
+        var now = Date.now();
         resource.lastModified = now;
         resource.created = now;
         return repository.create(resource.uuid, resource);
@@ -41,6 +40,14 @@ var ShortenerAdapter = function(logger, repository) {
         return repository.get(id);
     };
 
+    this.resolve = function(trackerId) {
+        logger.verbose(CONST.MODULE_NAME + "Resolve");
+        return repository.resolve(trackerId)
+            .then(function(result) {
+                return result.Items[0];
+            });
+    };
+
     this.delete = function(id) {
         logger.verbose(CONST.MODULE_NAME + "Delete");
         return repository.delete(id);
@@ -48,8 +55,15 @@ var ShortenerAdapter = function(logger, repository) {
 
     this.touch = function(id) {
         logger.verbose(CONST.MODULE_NAME + "Touch");
-        var now = (new Date()).getMilliseconds();
+        var now = Date.now();
         return repository.touch(id, now);
+    };
+
+    this.update = function(id, resource) {
+        logger.verbose(CONST.MODULE_NAME + "Update");
+        var now = Date.now();
+        resource.lastModified = now;
+        return repository.update(id, resource);
     };
 
 };

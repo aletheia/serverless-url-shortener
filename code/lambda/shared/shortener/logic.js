@@ -1,6 +1,6 @@
 "use strict";
 var ApplicationError = require("../error/ApplicationError");
-var uuid = require("node-uuid");
+var shortId = require("shortid");
 
 var CONST = {
     MODULE_NAME: "Shared/Shortener/Logic/"
@@ -11,7 +11,8 @@ var ShortenerLogic = function(logger, adapter) {
 
     this.create = function(data) {
         logger.verbose(CONST.MODULE_NAME + "Create");
-        data.tracker = uuid.v1();
+        data.tracker = shortId.generate();
+        data.visited = 0;
         return adapter.create(data)
             .catch(function(e) {
                 if (e.code === "ConditionalCheckFailedException") {
@@ -32,6 +33,16 @@ var ShortenerLogic = function(logger, adapter) {
                 return adapter.delete(id);
             });
     };
+
+    this.resolve = function(trackerId) {
+        logger.verbose(CONST.MODULE_NAME + "Resolve");
+        return adapter.resolve(trackerId)
+            .then(function(resource) {
+                resource.visited = resource.visited + 1;
+                return adapter.update(resource.uuid, resource);
+            });
+    };
+
 
     this.list = function() {
         logger.verbose(CONST.MODULE_NAME + "List");

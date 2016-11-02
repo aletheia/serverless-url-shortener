@@ -20,6 +20,8 @@ describe("shared/shortener/validator", function() {
             },
             list: function() {
             },
+            resolve: function() {
+            },
             update: function() {
             }
         };
@@ -60,7 +62,7 @@ describe("shared/shortener/validator", function() {
             sut.delete()
                 .catch(function(err) {
                     expect(err.code).toBe(ApplicationError.codes.UNPROCESSABLE);
-                    expect(err.message).toBe("Missing uuid in path");
+                    expect(err.message).toBe("Missing path parameters");
                     expect(err).toHaveMember("stack");
                     done();
                 });
@@ -89,6 +91,50 @@ describe("shared/shortener/validator", function() {
             sut.delete()
                 .then(function(result) {
                     expect(translator.delete).toHaveBeenCalled();
+                    expect(result).toBe("dummyObject");
+                    done();
+                });
+        });
+    });
+
+    describe("resolve()", function() {
+        it("should return an unprocessable error, if pathParameter is not defined", function(done) {
+            var event = {};
+            sut = new Validator(helper.getLoggerMock(), event, translator);
+            sut.resolve()
+                .catch(function(err) {
+                    expect(err.code).toBe(ApplicationError.codes.UNPROCESSABLE);
+                    expect(err.message).toBe("Missing path parameters");
+                    expect(err).toHaveMember("stack");
+                    done();
+                });
+        });
+        it("should return an unprocessable error, if pathParameter does not contain tracker", function(done) {
+            var event = {
+                pathParameters: {
+                    uuid: "A38F3980-4174-468F-AE55-EE59C274F2FB"
+                }
+            };
+            sut = new Validator(helper.getLoggerMock(), event, translator);
+            sut.resolve()
+                .catch(function(err) {
+                    expect(err.code).toBe(ApplicationError.codes.UNPROCESSABLE);
+                    expect(err.message).toBe("Missing tracker in path");
+                    expect(err).toHaveMember("stack");
+                    done();
+                });
+        });
+        it("should call the logic", function(done) {
+            var event = {
+                pathParameters: {
+                    tracker: "edFes23"
+                }
+            };
+            spyOn(translator, "resolve").and.returnValue(Promise.resolve("dummyObject"));
+            sut = new Validator(helper.getLoggerMock(), event, translator);
+            sut.resolve()
+                .then(function(result) {
+                    expect(translator.resolve).toHaveBeenCalled();
                     expect(result).toBe("dummyObject");
                     done();
                 });

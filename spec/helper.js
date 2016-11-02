@@ -6,8 +6,11 @@ var _ = require("lodash"),
     Promise = require("bluebird");
 
 
-module.exports.getContextMock = function() {
-    return {};
+module.exports.getContextMock = function(succeedFunction, failFunction) {
+    return {
+        succeed: succeedFunction,
+        fail: failFunction
+    };
 };
 module.exports.getEventMock = function() {
     return {};
