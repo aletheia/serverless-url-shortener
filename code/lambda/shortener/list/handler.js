@@ -5,9 +5,9 @@
 var createContainer = require("../../shared/container.js");
 
 /**
- * @callback module:xobject/create.lambdaCallback
+ * @callback module:shortener/list/handler.lambdaCallback
  * @param {Error} error
- * @param {module:shared/shortener/translator~shortener} result
+ * @param {module:shared/shortener/validator} result
  */
 
 /**
@@ -23,7 +23,7 @@ exports.handler = function(event, context, callback) {
     var logger = container.get("logger");
 
     logger.info("Lambda running for event: " + JSON.stringify(event));
-    return container.get("shortener.validator").create()
+    return container.get("shortener.validator").list()
         .then(function(result) {
             logger.info("Success: %s", JSON.stringify(result));
             callback(null, JSON.stringify(result));

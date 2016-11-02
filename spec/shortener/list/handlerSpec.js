@@ -1,21 +1,89 @@
 "use strict";
 
-var functionHandler = require("../../../code/lambda/shortener/list/handler");
+var _ = require("lodash"),
+    helper = require("../../helper.js"),
+    uuid = require("node-uuid"),
+    shortid = require("shortid"),
+    config = require("../../../code/lambda/shared/config"),
+    Index = require("../../../code/lambda/shortener/list/handler"),
+    AWS = require("aws-sdk");
+
 require("jasmine-expect");
 
-xdescribe("shortener-crud/Create", function() {
+describe("shortener/List", function() {
+    var dynamoClient = new AWS.DynamoDB.DocumentClient({region: config.dynamodb.region});
+    var sut;
+    var resources;
 
     beforeEach(function(done) {
+        sut = Index;
+        resources = [
+            {
+                uuid: uuid.v1(),
+                url: "http://www.neosperience.com",
+                tracker: shortid.generate(),
+                created: (new Date()).getMilliseconds(),
+                lastModified: (new Date()).getMilliseconds()
+            },
+            {
+                uuid: uuid.v1(),
+                url: "http://www.neosperience.com",
+                tracker: shortid.generate(),
+                created: (new Date()).getMilliseconds(),
+                lastModified: (new Date()).getMilliseconds()
+            }
+        ];
 
+        _.each(resources, function(item) {
+
+            var params = {
+                TableName: config.shortener.resourceTableName,
+                Item: item
+            };
+
+            dynamoClient.put(params).promise()
+                .then(function(res) {
+                    done();
+                });
+        });
     });
 
     describe("handler()", function() {
-        it("should return an unprocessable error", function(done) {
-
-        });
-
         it("should list every url into the system", function(done) {
+            var event = {};
 
+            sut.handler(event, helper.getContextMock(), function(err, result) {
+                expect(err).toBeNull();
+                var r = JSON.parse(result);
+                expect(r.count).toBe(2);
+                _.each(r.result, function(o) {
+                    expect(o).toHaveMember("uuid");
+                    expect(o.created).toBeIso8601();
+                    expect(o.lastModified).toBeIso8601();
+                });
+                done();
+            });
         });
     });
+
+
+    afterEach(function(done) {
+        _.each(resources, function(item) {
+
+            var params = {
+                TableName: config.shortener.resourceTableName,
+                Key: {
+                    uuid: item.uuid
+                }
+            };
+
+            dynamoClient.delete(params).promise()
+                .then(function(res) {
+                    done();
+                });
+
+        });
+
+    });
 });
+
