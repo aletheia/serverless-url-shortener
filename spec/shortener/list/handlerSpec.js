@@ -54,7 +54,8 @@ describe("shortener/List", function() {
 
             sut.handler(event, helper.getContextMock(), function(err, result) {
                 expect(err).toBeNull();
-                var r = JSON.parse(result);
+                expect(result.statusCode).toBe(200);
+                var r = JSON.parse(result.body);
                 expect(r.count).toBe(2);
                 _.each(r.result, function(o) {
                     expect(o).toHaveMember("uuid");

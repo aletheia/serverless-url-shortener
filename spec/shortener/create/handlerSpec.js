@@ -32,8 +32,11 @@ describe("shortener/Create", function() {
 
             sut.handler(event, helper.getContextMock(), function(err, result) {
                 expect(err).toBeNull();
-                var r = JSON.parse(result);
+                expect(result.statusCode).toBe(201);
+                var r = JSON.parse(result.body);
                 expect(r).toHaveMember("uuid");
+                expect(r).toHaveMember("tracker");
+                expect(r).toHaveMember("url");
                 expect(r.created).toBeIso8601();
                 expect(r.lastModified).toBeIso8601();
                 done();

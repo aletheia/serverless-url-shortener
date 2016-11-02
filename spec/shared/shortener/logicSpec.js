@@ -65,11 +65,10 @@ describe("shared/shortener/ShortenerLogic", function() {
                 })
                 .then(done);
         });
-        it("should create an xobject", function(done) {
+        it("should create a resource", function(done) {
             spyOn(adapter, "create").and.returnValue(Promise.resolve("dummyObject"));
             var data = {
-                name: "name",
-                created: 1234567890
+                url: "http://test.me"
             };
             sut.create(data)
                 .then(function(result) {

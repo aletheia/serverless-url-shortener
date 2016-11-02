@@ -48,6 +48,7 @@ describe("shortener/Create", function() {
 
             sut.handler(event, helper.getContextMock(), function(err, result) {
                 expect(err).toBeNull();
+                expect(result.statusCode).toBe(410);
 /*
                 var r = JSON.parse(result);
                 expect(r).toHaveMember("uuid");

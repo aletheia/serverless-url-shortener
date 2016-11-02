@@ -1,5 +1,6 @@
 "use strict";
 var ApplicationError = require("../error/ApplicationError");
+var uuid = require("node-uuid");
 
 var CONST = {
     MODULE_NAME: "Shared/Shortener/Logic/"
@@ -10,6 +11,7 @@ var ShortenerLogic = function(logger, adapter) {
 
     this.create = function(data) {
         logger.verbose(CONST.MODULE_NAME + "Create");
+        data.tracker = uuid.v1();
         return adapter.create(data)
             .catch(function(e) {
                 if (e.code === "ConditionalCheckFailedException") {
