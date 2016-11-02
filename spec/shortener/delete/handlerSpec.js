@@ -46,18 +46,32 @@ describe("shortener/Create", function() {
                 }
             };
 
-            sut.handler(event, helper.getContextMock(), function(err, result) {
-                expect(err).toBeNull();
-                expect(result.statusCode).toBe(410);
-/*
-                var r = JSON.parse(result);
-                expect(r).toHaveMember("uuid");
-                expect(r.created).toBeIso8601();
-                expect(r.lastModified).toBeIso8601();
-*/
-                done();
-            });
+            sut.handler(event, helper.getContextMock(
+                function(result) {
+                    expect(result.statusCode).toBe(410);
+                    done();
+                },
+                function(error) {
+                    expect(error).toBeNull();
+                }));
         });
+        it("should throw an error if resource does not exist", function(done) {
+            var event = {
+                pathParameters: {
+                    uuid: "notExistingUUID"
+                }
+            };
+
+            sut.handler(event, helper.getContextMock(
+                function() {
+                },
+                function(error) {
+                    expect(error).not.toBeNull();
+                    expect(error.statusCode).toBe(500);
+                    done();
+                }));
+        });
+
     });
 
 });

@@ -32,7 +32,7 @@ exports.handler = function(event, context, callback) {
                 "statusCode": 410
             };
 
-            callback(null, apiResponseEvent);
+            context.succeed(apiResponseEvent);
         })
         .catch(function(err) {
             var errors = JSON.stringify(err, Object.getOwnPropertyNames(err));
@@ -41,6 +41,6 @@ exports.handler = function(event, context, callback) {
                 "statusCode": 500,
                 "body": JSON.stringify(errors)
             };
-            callback(apiResponseEvent);
+            context.fail(apiResponseEvent);
         });
 };

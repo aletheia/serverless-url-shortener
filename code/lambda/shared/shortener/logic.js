@@ -1,4 +1,5 @@
 "use strict";
+var _ = require("lodash");
 var ApplicationError = require("../error/ApplicationError");
 var shortId = require("shortid");
 
@@ -29,7 +30,10 @@ var ShortenerLogic = function(logger, adapter) {
     this.delete = function(id) {
         logger.verbose(CONST.MODULE_NAME + "Delete");
         return adapter.get(id)
-            .then(function() {
+            .then(function(result) {
+                if (_.isNil(result)) {
+                    throw new ApplicationError(ApplicationError.codes.NOT_FOUND, "Resource to be deleted not found");
+                }
                 return adapter.delete(id);
             });
     };
