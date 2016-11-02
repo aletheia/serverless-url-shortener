@@ -30,18 +30,40 @@ describe("shortener/Create", function() {
                 body: JSON.stringify(newItem)
             };
 
-            sut.handler(event, helper.getContextMock(), function(err, result) {
-                expect(err).toBeNull();
-                expect(result.statusCode).toBe(201);
-                var r = JSON.parse(result.body);
-                expect(r).toHaveMember("uuid");
-                expect(r).toHaveMember("tracker");
-                expect(r).toHaveMember("url");
-                expect(r.created).toBeIso8601();
-                expect(r.lastModified).toBeIso8601();
-                done();
-            });
+            sut.handler(event, helper.getContextMock(
+                function(result) {
+                    expect(result.statusCode).toBe(201);
+                    var r = JSON.parse(result.body);
+                    expect(r).toHaveMember("uuid");
+                    expect(r).toHaveMember("tracker");
+                    expect(r).toHaveMember("url");
+                    expect(r.created).toBeIso8601();
+                    expect(r.lastModified).toBeIso8601();
+                    done();
+                },
+                function(error) {
+                    expect(error).toBeNull();
+                    done();
+                }
+                ));
         });
+
+        it("should throw an error if url is not defined", function(done) {
+            var event = {
+                body: ""
+            };
+
+            sut.handler(event, helper.getContextMock(
+                function() {
+                },
+                function(error) {
+                    expect(error).not.toBeNull();
+                    expect(error.statusCode).toBe(500);
+                    done();
+                }
+            ));
+        });
+
     });
 
     afterEach(function(done) {
