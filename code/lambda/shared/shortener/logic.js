@@ -34,13 +34,7 @@ var ShortenerLogic = function(logger, adapter) {
     this.list = function() {
         logger.verbose(CONST.MODULE_NAME + "List");
         var listPromise = adapter.list();
-        return listPromise
-            .then(function(result) {
-                return {
-                    result: result,
-                    count: listPromise.value().length
-                };
-            });
+        return listPromise;
     };
 };
 

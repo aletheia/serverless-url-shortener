@@ -129,14 +129,17 @@ describe("shared/shortener/ShortenerLogic", function() {
     describe("list()", function() {
         beforeEach(function() {
             spyOn(adapter, "list").and.returnValue(Promise.resolve(
-                [
-                    {
-                        uuid: "idA"
-                    },
-                    {
-                        uuid: "idB"
-                    }
-                ])
+                {
+                    result: [
+                        {
+                            uuid: "idA"
+                        },
+                        {
+                            uuid: "idB"
+                        }
+                    ],
+                    count: 2
+                })
             );
         });
 
