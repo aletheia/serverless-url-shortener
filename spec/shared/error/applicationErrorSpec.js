@@ -1,7 +1,7 @@
 "use strict";
 
 var CONST = {
-    MODULE_PATH: "../code/lambda/shared/error/ApplicationError.js"
+    MODULE_PATH: "../../../code/lambda/shared/error/ApplicationError.js"
 };
 
 describe("ApplicationError.js", function() {

@@ -20,35 +20,68 @@ provider:
             - ":"
             - "Ref" : "AWS::AccountId"
             - ":table/"
-            - "Ref" : "urlsTable"
+            - "Ref" : "TrackedResourcesTable"
 package:
   exclude:
     - .idea
     - coverage/**
-    - spec
-    - node_modules/**
+    - spec/**
 
 functions:
-  resourceGet:
-    handler: code/lambda/shortener-crud/list/handler.handler
+  listResource:
+    handler: code/lambda/shortener/list/handler.handler
     events:
       - http:
-          path: r
+          path: resource
           method: get
+
+  deleteResource:
+    handler: code/lambda/shortener/delete/handler.handler
+    events:
+      - http:
+          path: resource
+          method: delete
+
+  createResource:
+    handler: code/lambda/shortener/create/handler.handler
+    events:
+      - http:
+          path: resource
+          method: post
+
+  resolveResource:
+    handler: code/lambda/resolver/get/handler.handler
+    events:
+      - http:
+          path: l/{tracker}
+          method: get
+
 
 # you can add CloudFormation resource templates here
 resources:
   Resources:
-    urlsTable:
+    TrackedResourcesTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: sls-url-shortener-urls-${opt:stage}
         AttributeDefinitions:
           - AttributeName: uuid
             AttributeType: S
+          - AttributeName: tracker
+            AttributeType: S
         KeySchema:
           - AttributeName: uuid
             KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: sls-url-shortener-trackers-${opt:stage}
+            KeySchema:
+              - AttributeName: tracker
+                KeyType: HASH
+            Projection:
+              ProjectionType: "ALL"
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1

@@ -1,6 +1,6 @@
 "use strict";
 
-var functionHandler = require("../../../code/lambda/shortener-crud/list/handler");
+var functionHandler = require("../../../code/lambda/shortener/create/handler");
 require("jasmine-expect");
 
 xdescribe("shortener-crud/Create", function() {
@@ -14,8 +14,9 @@ xdescribe("shortener-crud/Create", function() {
 
         });
 
-        it("should list every url into the system", function(done) {
+        it("should create a link (import)", function(done) {
 
         });
+
     });
 });
