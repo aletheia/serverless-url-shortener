@@ -39,7 +39,7 @@ functions:
     handler: code/lambda/shortener/delete/handler.handler
     events:
       - http:
-          path: resource
+          path: resource/{uuid}
           method: delete
 
   createResource:

@@ -16,8 +16,12 @@ var ApplicationError = function(code, message) {
     }
 
     this.message = message || ApplicationError.messages[code];
-
+    this.stack = (new Error()).stack;
 };
+
+ApplicationError.prototype = Object.create(Error.prototype);
+ApplicationError.prototype.name = "ApplicationError";
+
 ApplicationError.codes = {
     INTERNAL_ERROR: "INTERNAL_ERROR",
     NOT_FOUND: "NOT_FOUND",
