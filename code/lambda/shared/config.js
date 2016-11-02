@@ -7,6 +7,7 @@ var _ = require("lodash"),
 
 nconf.env();
 
+/* istanbul ignore next */
 var env = !_.isNil(nconf.get("ENV")) ? "." + nconf.get("ENV") : "";
 
 var configFile = path.join(__dirname, "config/config" + env + ".json");

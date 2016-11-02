@@ -13,6 +13,7 @@ function registerLogger(container, config) {
 }
 
 function registerResource(container, config) {
+    /* istanbul ignore next */
     var c = _.isObject(config.shortener) ? config.shortener : {};
 
 /*    _.assign(c, {
@@ -33,7 +34,9 @@ function registerDynamoDB(container, config) {
     container.register("dynamodb.config", config.dynamodb, "singleton");
 }
 
+
 function createContainer(event, context) {
+    /* istanbul ignore next */   //this is the wiring part of the code, it is definitely not possible test every path
     var container = intravenous.create({
         onDispose: function(obj, serviceName) {
             if (obj.dispose !== undefined) {

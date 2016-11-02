@@ -23,7 +23,7 @@ exports.handler = function(event, context, callback) {
     var logger = container.get("logger");
 
     logger.info("Lambda running for event: " + JSON.stringify(event));
-    return container.get("shortener.validator").create()
+    return container.get("shortener.validator").delete()
         .then(function(result) {
             logger.info("Success: %s", JSON.stringify(result));
             callback(null, JSON.stringify(result));

@@ -138,5 +138,24 @@ describe("shared/shortener/ShortenerAdapter", function() {
         });
     });
 
+    describe("get()", function() {
+        it("get an item", function(done) {
+            var expRes = {
+                uuid: "id1"
+            };
+
+            spyOn(repository, "get").and.returnValue(Promise.resolve(expRes));
+            sut.get()
+                .then(function(result) {
+                    expect(repository.get).toHaveBeenCalled();
+                    expect(result).toEqual(
+                        {
+                            uuid: "id1"
+                        });
+                    done();
+                });
+        });
+    });
+
 
 });

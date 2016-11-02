@@ -5,6 +5,8 @@ var winston = require("winston"),
 
 module.exports = function(config) {
     var logger = new winston.Logger();
+
+    /* istanbul ignore next */
     _.forEach(config, function(cfg, key) {
         logger.add(winston.transports[cfg.type], (
             _.assignIn({name: key}, cfg.options)

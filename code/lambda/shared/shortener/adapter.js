@@ -36,6 +36,11 @@ var ShortenerAdapter = function(logger, repository) {
             });
     };
 
+    this.get = function(id) {
+        logger.verbose(CONST.MODULE_NAME + "Get");
+        return repository.get(id);
+    };
+
     this.delete = function(id) {
         logger.verbose(CONST.MODULE_NAME + "Delete");
         return repository.delete(id);
