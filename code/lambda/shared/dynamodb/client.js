@@ -19,6 +19,10 @@ function Client(logger, config) {
         logger.debug("Executing query: " + JSON.stringify(params));
         return client.query(params).promise();
     };
+    this.scan = function(params) {
+        logger.debug("Executing scan: " + JSON.stringify(params));
+        return client.scan(params).promise();
+    };
     this.update = function(params) {
         logger.debug("Executing update query: " + JSON.stringify(params));
         return client.update(params).promise();

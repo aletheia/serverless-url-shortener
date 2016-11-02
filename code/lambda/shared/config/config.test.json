@@ -3,6 +3,7 @@
     "region": "eu-west-1"
   },
   "shortener": {
-    "SHORTENER_TABLE_NAME": "sls-url-shortener-links"
+    "SHORTENER_TABLE_NAME": "sls-url-shortener-urls-dev",
+    "SHORTENER_INDEX_NAME": "sls-url-shortener-trackers-dev"
   }
 }
