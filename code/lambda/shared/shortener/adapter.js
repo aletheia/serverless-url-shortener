@@ -24,6 +24,18 @@ var ShortenerAdapter = function(logger, repository) {
         return repository.create(resource.uuid, resource);
     };
 
+    this.list = function() {
+        logger.verbose(CONST.MODULE_NAME + "List");
+
+        return repository.list()
+            .then(function(result) {
+                return {
+                    count: result.Count,
+                    result: result.Items
+                };
+            });
+    };
+
     this.delete = function(id) {
         logger.verbose(CONST.MODULE_NAME + "Delete");
         return repository.delete(id);
