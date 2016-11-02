@@ -1,0 +1,40 @@
+{
+  "message": "",
+  "input": {
+    "resource": "/{url+}",
+    "path": "/url",
+    "httpMethod": "GET",
+    "headers": {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate",
+      "cache-control": "no-cache",
+      "CloudFront-Forwarded-Proto": "https",
+      "CloudFront-Is-Desktop-Viewer": "true",
+      "CloudFront-Is-Mobile-Viewer": "false",
+      "CloudFront-Is-SmartTV-Viewer": "false",
+      "CloudFront-Is-Tablet-Viewer": "false",
+      "CloudFront-Viewer-Country": "US",
+      "Content-Type": "application/json",
+      "Host": "testme.neosperience.com"
+    },
+    "queryStringParameters": {
+    },
+    "pathParameters": {
+      "proxy": "url"
+    },
+    "stageVariables": {
+      "stageVariableName": "stageVariableValue"
+    },
+    "requestContext": {
+      "accountId": "12345678912",
+      "resourceId": "roq9wj",
+      "stage": "testStage",
+      "requestId": "deef4878-7910-11e6-8f14-25afc3e9ae33",
+      "identity": {
+      },
+      "resourcePath": "/{url+}",
+      "httpMethod": "POST"
+    },
+    "body": ""
+  }
+}
