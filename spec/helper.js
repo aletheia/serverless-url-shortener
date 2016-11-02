@@ -6,28 +6,30 @@ var _ = require("lodash"),
     Promise = require("bluebird");
 
 
-module.exports.getContextMock = function () {
+module.exports.getContextMock = function() {
     return {};
 };
-module.exports.getEventMock = function () {
+module.exports.getEventMock = function() {
     return {};
 };
-module.exports.getLoggerMock = function () {
+
+module.exports.getLoggerMock = function() {
     return {
-        silly: function () {
+        silly: function() {
         },
-        debug: function () {
+        debug: function() {
         },
-        verbose: function () {
+        verbose: function() {
         },
-        info: function () {
+        info: function() {
         },
-        warn: function () {
+        warn: function() {
         },
-        error: function () {
+        error: function() {
         }
     };
 };
-module.exports.createContainer = function (event, context) {
+
+module.exports.createContainer = function(event, context) {
     return createContainer(event, context);
 };
