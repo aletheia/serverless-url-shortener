@@ -16,60 +16,67 @@ describe("shortener/Create", function() {
     var sut;
     var newItem;
 
-    beforeEach(function(done) {
-        sut = Index;
-        newItem = {
-            uuid: uuid.v1(),
-            url: "http://www.neosperience.com",
-            tracker: shortid.generate(),
-            created: (new Date()).getMilliseconds(),
-            lastModified: (new Date()).getMilliseconds()
-        };
+
+    describe("handler()", function() {
+        describe("should delete a resource", function() {
+            beforeEach(function(done) {
+                sut = Index;
+                newItem = {
+                    uuid: uuid.v1(),
+                    url: "http://www.neosperience.com",
+                    tracker: shortid.generate(),
+                    created: Date.now(),
+                    lastModified: Date.now()
+                };
 
 
-        var params = {
-            TableName: config.shortener.resourceTableName,
-            Item: newItem
-        };
+                var params = {
+                    TableName: config.shortener.resourceTableName,
+                    Item: newItem
+                };
 
-        dynamoClient.put(params).promise()
-            .then(function(res) {
-                done();
+                dynamoClient.put(params).promise()
+                    .then(function(res) {
+                        done();
+                    });
+
             });
 
-    });
-    describe("handler()", function() {
-        it("should delete a resource", function(done) {
-            var event = {
-                pathParameters: {
-                    uuid: newItem.uuid
-                }
-            };
+            it("if it exists", function(done) {
+                var event = {
+                    pathParameters: {
+                        uuid: newItem.uuid
+                    }
+                };
 
-            sut.handler(event, helper.getContextMock(
-                function(result) {
-                    expect(result.statusCode).toBe(410);
-                    done();
-                },
-                function(error) {
-                    expect(error).toBeNull();
-                }));
+                sut.handler(event, helper.getContextMock(
+                    function(result) {
+                        expect(result.statusCode).toBe(410);
+                        done();
+                    },
+                    function(error) {
+                        expect(error).toBeNull();
+                    }));
+            });
         });
-        it("should throw an error if resource does not exist", function(done) {
-            var event = {
-                pathParameters: {
-                    uuid: "notExistingUUID"
-                }
-            };
 
-            sut.handler(event, helper.getContextMock(
-                function() {
-                },
-                function(error) {
-                    expect(error).not.toBeNull();
-                    expect(error.statusCode).toBe(500);
-                    done();
-                }));
+        describe("should throw an error", function() {
+            it("if resource does not exist", function(done) {
+                var event = {
+                    pathParameters: {
+                        uuid: "notExistingUUID"
+                    }
+                };
+
+                sut.handler(event, helper.getContextMock(
+                    function() {
+                    },
+                    function(error) {
+                        expect(error).not.toBeNull();
+                        expect(error.statusCode).toBe(500);
+                        done();
+                    }));
+            });
         });
 
     });

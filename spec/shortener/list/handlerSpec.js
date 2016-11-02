@@ -22,15 +22,15 @@ describe("shortener/List", function() {
                 uuid: uuid.v1(),
                 url: "http://www.neosperience.com",
                 tracker: shortid.generate(),
-                created: (new Date()).getMilliseconds(),
-                lastModified: (new Date()).getMilliseconds()
+                created: Date.now(),
+                lastModified: Date.now()
             },
             {
                 uuid: uuid.v1(),
                 url: "http://www.neosperience.com",
                 tracker: shortid.generate(),
-                created: (new Date()).getMilliseconds(),
-                lastModified: (new Date()).getMilliseconds()
+                created: Date.now(),
+                lastModified: Date.now()
             }
         ];
 
@@ -52,18 +52,22 @@ describe("shortener/List", function() {
         it("should list every url into the system", function(done) {
             var event = {};
 
-            sut.handler(event, helper.getContextMock(), function(err, result) {
-                expect(err).toBeNull();
-                expect(result.statusCode).toBe(200);
-                var r = JSON.parse(result.body);
-                expect(r.count).toBe(2);
-                _.each(r.result, function(o) {
-                    expect(o).toHaveMember("uuid");
-                    expect(o.created).toBeIso8601();
-                    expect(o.lastModified).toBeIso8601();
-                });
-                done();
-            });
+            sut.handler(event, helper.getContextMock(
+                function(result) {
+                    expect(result.statusCode).toBe(200);
+                    var r = JSON.parse(result.body);
+                    expect(r.count).toBe(2);
+                    _.each(r.result, function(o) {
+                        expect(o).toHaveMember("uuid");
+                        expect(o.created).toBeIso8601();
+                        expect(o.lastModified).toBeIso8601();
+                    });
+                    done();
+                },
+                function(error) {
+                    expect(error).toBeNull();
+                    done();
+                }));
         });
     });
 

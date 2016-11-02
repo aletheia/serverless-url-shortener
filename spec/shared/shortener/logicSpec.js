@@ -87,7 +87,7 @@ describe("shared/shortener/ShortenerLogic", function() {
                     expect(adapter.get).toHaveBeenCalledWith("id");
                     expect(err).toEqual(new ApplicationError(
                         ApplicationError.codes.NOT_FOUND,
-                        "TrackedResource id not found."
+                        "Resource to be deleted not found"
                     ));
                 })
                 .then(done);
