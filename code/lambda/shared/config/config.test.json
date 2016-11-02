@@ -1,0 +1,8 @@
+{
+  "dynamodb": {
+    "region": "eu-west-1"
+  },
+  "shortener": {
+    "SHORTENER_TABLE_NAME": "sls-url-shortener-links"
+  }
+}
