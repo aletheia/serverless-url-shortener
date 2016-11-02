@@ -2,6 +2,15 @@
   "dynamodb": {
     "region": "eu-west-1"
   },
+  "log": {
+    "console": {
+      "type": "Console",
+      "options": {
+        "level": "info",
+        "colorize": true
+      }
+    }
+  },
   "shortener": {
     "resourceTableName": "sls-url-shortener-urls-dev",
     "resourceIndexName": "sls-url-shortener-trackers-dev"
