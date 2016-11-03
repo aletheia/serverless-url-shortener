@@ -21,6 +21,21 @@ provider:
             - "Ref" : "AWS::AccountId"
             - ":table/"
             - "Ref" : "TrackedResourcesTable"
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:*"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:dynamodb:"
+            - "Ref" : "AWS::Region"
+            - ":"
+            - "Ref" : "AWS::AccountId"
+            - ":table/"
+            - "Ref" : "TrackedResourcesTable"
+            - "/index/"
+            - "sls-url-shortener-trackers-${opt:stage}"
+
 package:
   exclude:
     - .idea
