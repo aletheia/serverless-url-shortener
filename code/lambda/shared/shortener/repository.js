@@ -101,7 +101,7 @@ var ShortenerRepository = function(logger, client, config) {
         params.ConditionExpression = "attribute_exists(#uuid)";
         params.ExpressionAttributeNames = {"#uuid": "uuid"};
         var self = this;
-        return client.update(params)
+        return client.put(params)
             .then(function() {
                 return self.get(key);
             });

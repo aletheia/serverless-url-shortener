@@ -26,10 +26,10 @@ function Client(logger, config) {
         return client.scan(params).promise();
     };
 
-    this.update = function(params) {
+/*    this.update = function(params) {
         logger.debug("Executing update query: " + JSON.stringify(params));
         return client.update(params).promise();
-    };
+    };*/
 
 }
 
