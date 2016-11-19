@@ -30,7 +30,7 @@ function registerResource(container, config) {
 }
 
 function registerDynamoDB(container, config) {
-    container.register("dynamodb.client", require("./dynamodb/client.js"));
+    container.register("dynamodb.client", require(config.dynamodb.clientJS));
     container.register("dynamodb.config", config.dynamodb, "singleton");
 }
 

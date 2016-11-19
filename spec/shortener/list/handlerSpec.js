@@ -1,10 +1,11 @@
 "use strict";
 
 var _ = require("lodash"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     uuid = require("node-uuid"),
     shortid = require("shortid"),
     config = require("../../../code/lambda/shared/config"),
+    fixtures = require("../../fixtures/resources-table.json"),
     Index = require("../../../code/lambda/shortener/list/handler"),
     AWS = require("aws-sdk");
 

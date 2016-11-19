@@ -1,6 +1,6 @@
 "use strict";
 var Adapter = require("../../../code/lambda/shared/shortener/adapter.js"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     Promise = require("bluebird");
 
 require("jasmine-expect");

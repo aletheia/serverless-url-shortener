@@ -1,6 +1,6 @@
 "use strict";
 var Validator = require("../../../code/lambda/shared/shortener/validator.js"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     ApplicationError = require("../../../code/lambda/shared/error/ApplicationError"),
     Promise = require("bluebird");
 

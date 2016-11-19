@@ -1,5 +1,5 @@
 "use strict";
-var helper = require("../../helper.js"),
+var helper = require("../../helpers/helper.js"),
     Promise = require("bluebird"),
     Translator = require("../../../code/lambda/shared/shortener/translator.js");
 require("jasmine-expect");

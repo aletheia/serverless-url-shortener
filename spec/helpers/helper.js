@@ -1,8 +1,8 @@
 "use strict";
 var _ = require("lodash"),
     AWS = require("aws-sdk"),
-    config = require("../code/lambda/shared/config.js"),
-    createContainer = require("../code/lambda/shared/container.js"),
+    config = require("../../code/lambda/shared/config.js"),
+    createContainer = require("../../code/lambda/shared/container.js"),
     Promise = require("bluebird");
 
 

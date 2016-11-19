@@ -1,6 +1,6 @@
 "use strict";
 var Repository = require("../../../code/lambda/shared/shortener/repository.js"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     Promise = require("bluebird");
 
 require("jasmine-expect");

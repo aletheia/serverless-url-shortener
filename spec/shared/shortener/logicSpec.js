@@ -1,7 +1,7 @@
 "use strict";
 
 var Logic = require("../../../code/lambda/shared/shortener/logic.js"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     ApplicationError = require("../../../code/lambda/shared/error/ApplicationError"),
     Promise = require("bluebird");
 
@@ -161,5 +161,9 @@ describe("shared/shortener/ShortenerLogic", function() {
                 })
                 .then(done);
         });
+    });
+
+    describe(".resolve()", function() {
+        //TODO: implement
     });
 });

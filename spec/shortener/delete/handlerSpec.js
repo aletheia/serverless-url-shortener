@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require("lodash"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     Index = require("../../../code/lambda/shortener/delete/handler"),
     uuid = require("node-uuid"),
     shortid = require("shortid"),

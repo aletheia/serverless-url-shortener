@@ -1,40 +1,45 @@
 "use strict";
 
 var _ = require("lodash"),
-    helper = require("../../helper.js"),
+    helper = require("../../helpers/helper.js"),
     uuid = require("node-uuid"),
     shortid = require("shortid"),
     config = require("../../../code/lambda/shared/config"),
+    fixtures = require("../../fixtures/resources-table.json"),
     Index = require("../../../code/lambda/resolver/get/handler"),
     AWS = require("aws-sdk");
 
 require("jasmine-expect");
 
 describe("resolver/Get", function() {
-    var dynamoClient = new AWS.DynamoDB.DocumentClient({region: config.dynamodb.region});
+    //var dynamoClient = new AWS.DynamoDB.DocumentClient({region: config.dynamodb.region});
     var sut;
     var itemToResolve;
 
     beforeEach(function(done) {
         sut = Index;
-        itemToResolve = {
-            uuid: uuid.v1(),
-            url: "http://www.neosperience.com",
-            tracker: shortid.generate(),
-            visited: 0,
-            created: Date.now(),
-            lastModified: Date.now()
-        };
+        itemToResolve = fixtures.getItem;
+        /*
+         itemToResolve = {
+         uuid: uuid.v1(),
+         url: "http://www.neosperience.com",
+         tracker: shortid.generate(),
+         visited: 0,
+         created: Date.now(),
+         lastModified: Date.now()
+         };
 
-        var params = {
-            TableName: config.shortener.resourceTableName,
-            Item: itemToResolve
-        };
+         var params = {
+         TableName: config.shortener.resourceTableName,
+         Item: itemToResolve
+         };
 
-        dynamoClient.put(params).promise()
-            .then(function(res) {
-                done();
-            });
+         dynamoClient.put(params).promise()
+         .then(function(res) {
+         done();
+         });
+         */
+        done();
 
     });
 
@@ -51,6 +56,7 @@ describe("resolver/Get", function() {
                     expect(result.statusCode).toBe(302);
                     expect(result.headers.Location).toBe(itemToResolve.url);
 
+/*
                     var params = {
                         TableName: config.shortener.resourceTableName,
                         Key: {
@@ -61,6 +67,7 @@ describe("resolver/Get", function() {
                         .then(function(result) {
                             done();
                         });
+*/
 
                 },
                 function(error) {
@@ -90,6 +97,7 @@ describe("resolver/Get", function() {
 
     afterEach(function(done) {
 
+/*
         var params = {
             TableName: config.shortener.resourceTableName,
             Key: {
@@ -101,6 +109,7 @@ describe("resolver/Get", function() {
             .then(function(res) {
                 done();
             });
+*/
     });
 
 });
