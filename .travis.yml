@@ -3,6 +3,5 @@ language: node_js
 node_js:
   - "4.3.2"
 
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
