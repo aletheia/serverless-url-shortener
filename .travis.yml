@@ -1,7 +1,14 @@
 language: node_js
 
+install:
+  - npm install -g codecov
+
 node_js:
   - "4.3.2"
+
+script:
+  - npm run cover
+  - codecov
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
