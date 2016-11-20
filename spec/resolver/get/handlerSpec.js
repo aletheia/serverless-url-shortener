@@ -11,7 +11,7 @@ var _ = require("lodash"),
 
 require("jasmine-expect");
 
-describe("resolver/Get", function() {
+xdescribe("resolver/Get", function() {
     //var dynamoClient = new AWS.DynamoDB.DocumentClient({region: config.dynamodb.region});
     var sut;
     var itemToResolve;

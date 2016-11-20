@@ -10,7 +10,7 @@ var _ = require("lodash"),
 require("jasmine-expect");
 
 
-describe("shortener/Create", function() {
+xdescribe("shortener/Create", function() {
     var dynamoClient = new AWS.DynamoDB.DocumentClient({region: config.dynamodb.region});
     var sut;
     var newItem;
