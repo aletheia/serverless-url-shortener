@@ -9,31 +9,25 @@
 
 Serverless URL shortener provides a set of services to shorten urls and track opening completely built on AWS Lambda and [Serverless 1.1 framework](https://serverless.com)
 
-> **A note about languages**
-
-> The serverless framework relies on AWS Lambda and supports a variety of development languages such as Python, Java, and NodeJS. To this particular project, we found NodeJS being the best solution, due to its special requirements regarding fast time to market. Moreover, we believe NodeJS and Python being first citizens in the Serverless world, thanks to their inner flexibility.
-
-> This code is written using ES5 and plain Javascript with a bit of Promise flavor, provided by Bluebird. The reason for this choice (instead of ES6) is related to the support Lambda is currently providing that is NodeJS 4.3.2. We do not believe that using transpillers (such as Babel) is a good idea in an environment where you do not have access to the file system (and cannot debug remote code directly). Call this a conservative move, but we think the risk is not worth the game.
-
 ## Getting Started
 In order to install and run examples you need an AWS account properly configured on your system. To get started with AWS account configuration, please follow this [link](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
 
 Start using Serverless URL shortener is extremely easy
 
 #### 01. Start cloning this repository
-```
+```bash
 git clone https://github.com/aletheia/serverless-url-shortener path-to-my-folder
 cd path-to-my-folder
 ```
 #### 02. Install dependencies through NPM
-```
+```bash
 npm install
 ```
 
 #### 03. Deploy CloudFormation stack and functions
 Serverless commands are exposed through ```npm run``` to provide ease of usage and consistency for continuous integration
 
-```
+```bash
 npm run sls deploy --stage <any stage> --region <your region>
 ```
 
@@ -49,11 +43,29 @@ Serverless does not mean architecture-less, moreover strong pattern culture is r
 
 ### A layered archietcture
 We adopted a layered architecture as follows for :
+![alt text](module-architecture.png "Services architecture")
 
+#### handler
+Receives Lambda event, handles AWS specific code and is injected with validator
 
-## APIs
-TBD
+#### validator
+Perform event / input validation, enforcing constraints and rejecting invalid payloads. Additional permission checks should be implemented here
 
-## Where to go from here?
-TBD
+#### translator
+Converts input data to business logic data, adding and building system consistent representation. Is injected with logic layer
 
+#### logic
+Implements Business Logic for a specific service. Works on Business Objects, being an equivalent of MVC Service layer. Is injected with the adapter
+
+#### adapter
+Converts data to a persistence actionable format, does not know about persistence concrete implementation, builds queries but does not initialize any connection to persistence. It is injected with repository.
+
+#### repository
+Implements direct API calls to underlying persistence system
+
+#### AWS resources
+Amazon Web Service persistence layer. It can be either dynamoDB, Redis, S3 or another microservice
+
+## A note about languages
+The serverless framework relies on AWS Lambda and supports a variety of development languages such as Python, Java, and NodeJS. To this particular project, we found NodeJS being the best solution, due to its special requirements regarding fast time to market. Moreover, we believe NodeJS and Python being first citizens in the Serverless world, thanks to their inner flexibility.
+This code is written using ES5 and plain Javascript with a bit of Promise flavor, provided by Bluebird. The reason for this choice (instead of ES6) is related to the support Lambda is currently providing that is NodeJS 4.3.2. We do not believe that using transpillers (such as Babel) is a good idea in an environment where you do not have access to the file system (and cannot debug remote code directly). Call this a conservative move, but we think the risk is not worth the game.
