@@ -1,5 +1,6 @@
 # Serverless URL Shortener
 [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
+[![npm version](https://badge.fury.io/js/serverless-url-shortener.svg)](https://badge.fury.io/js/serverless-url-shortener)
 [![dependencies](https://david-dm.org/aletheia/serverless-url-shortener.svg)](https://david-dm.org/aletheia/serverless-url-shortener)
 [![dev-dependencies](https://david-dm.org/aletheia/serverless-url-shortener/dev-status.svg)](https://david-dm.org/aletheia/serverless-url-shortener?type=dev)
 [![bitHound Overall Score](https://www.bithound.io/github/aletheia/serverless-url-shortener/badges/score.svg)](https://www.bithound.io/github/aletheia/serverless-url-shortener)
@@ -41,10 +42,14 @@ Serverless framework does not force any specific project structure, but relying 
 
 We usually use [npm](https://www.npmjs.com) and [GulpJS](http://gulpjs.com) due to the better support for configuration and parameter passing provided by Gulp, but we do not involve any file copy or packing. Whenever this is required, we think that deferring all the uglify/package stuff to [Webpack](https://webpack.github.io), maybe used as a serverless plugin, could be a great idea.
 
+Going on, code that could be shared through multiple resources is stored into a shared folder, while 
+
 ## Archtiecture
-TBD
+Serverless does not mean architecture-less, moreover strong pattern culture is required since Serverless framework has an unopinionated view about Lambda function development. We have enforced some well-grounded principles into this project, making our code almost completely cloud-independent and enforcing segregation.
+
 ### A layered archietcture
-TBD
+We adopted a layered architecture as follows for :
+
 
 ## APIs
 TBD

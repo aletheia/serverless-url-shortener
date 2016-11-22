@@ -1,6 +1,6 @@
 {
   "name": "serverless-url-shortener",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "author": {
     "name": "Luca Bianchi",
     "email": "bianchi.luca@gmail.com",
