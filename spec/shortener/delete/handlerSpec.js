@@ -3,7 +3,7 @@
 var _ = require("lodash"),
     helper = require("../../helpers/helper.js"),
     Index = require("../../../code/lambda/shortener/delete/handler"),
-    uuid = require("node-uuid"),
+    uuid = require("uuid"),
     shortid = require("shortid"),
     config = require("../../../code/lambda/shared/config"),
     AWS = require("aws-sdk");

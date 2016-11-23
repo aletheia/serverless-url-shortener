@@ -2,7 +2,7 @@
 
 var _ = require("lodash"),
     helper = require("../../helpers/helper.js"),
-    uuid = require("node-uuid"),
+    uuid = require("uuid"),
     shortid = require("shortid"),
     config = require("../../../code/lambda/shared/config"),
     fixtures = require("../../fixtures/resources-table.json"),
