@@ -1,6 +1,6 @@
 "use strict";
 var _ = require("lodash"),
-    uuid = require("node-uuid");
+    uuid = require("uuid");
 
 var CONST = {
     MODULE_NAME: "Shared/Shortener/Adapter/"
